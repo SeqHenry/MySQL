@@ -1,0 +1,17 @@
+USE Assignment1
+
+drop table feedbackForm
+
+CREATE TABLE feedbackForm(
+   fullName CHAR(64) NOT NULL,
+   organisation CHAR(64) NOT NULL,
+   email VARCHAR(255) NOT NULL,
+   phone VARCHAR(15) NOT NULL,
+   #How did you hear about us? ,# drop down list required
+   comments VARCHAR(24),
+   
+   CONSTRAINT EI CHECK (email REGEXP '^[a-z]+[0-9]+[@]+...[.]..|...$'),
+   CONSTRAINT Ph CHECK (phone REGEXP '^[+]|[0-9]*[-]*$' AND (CHAR_LENGTH(phone)<=15 AND CHAR_LENGTH(phone)>11))
+)
+
+INSERT INTO feedbackForm (fullName,organisation,email,phone,comments) VALUES('Robert Pires','Numino labs','joel09@num.mo','+0563-25452848','completed process');
