@@ -1,0 +1,85 @@
+DROP TABLE citizenPersonalDetails
+DROP TABLE citizenEducationDetails
+DROP TABLE citizenMedicalHistory
+DROP TABLE citizenMedicalHistory
+DROP TABLE countryMedicalCenters
+DROP TABLE countryMedicalDepartments
+
+CREATE DATABASE Assignment1;
+USE Assignment1;
+
+CREATE TABLE citizenPersonalDetails(
+   citizenId INT AUTO_INCREMENT NOT NULL,
+   PRIMARY KEY (citizenId),
+   fullName VARCHAR(255) NOT NULL,
+   aadharId INT(16) NOT NULL,
+   dob DATE NOT NULL,
+   state VARCHAR(255) NOT NULL,
+   pincode VARCHAR(45) NOT NULL,
+   gender VARCHAR(45) NOT NULL,
+   emailId VARCHAR(255),
+   primaryPhone INT(15) NOT NULL,
+   otherPhone INT(15),
+   address VARCHAR(255) NOT NULL,
+   
+   CONSTRAINT FN CHECK (CHAR_LENGTH(fullName)<=255),
+   CONSTRAINT AI CHECK (CHAR_LENGTH(aadharId) =16),
+   CONSTRAINT PC CHECK (CHAR_LENGTH(pincode)>=2 AND CHAR_LENGTH(pincode)<=10),
+   CONSTRAINT EE CHECK (emailId REGEXP '^[a-z]+[0-9]+[@]+...[.].....$'),
+   CONSTRAINT P1 CHECK (primaryPhone REGEXP '^[+]|[0-9]*[-]$' AND (CHAR_LENGTH(primaryPhone)<=15 AND CHAR_LENGTH(primaryPhone)>11)),
+   CONSTRAINT O1 CHECK (otherPhone REGEXP '^[+]|[0-9]*|[-]$' AND (CHAR_LENGTH(otherPhone)<=15 AND CHAR_LENGTH(otherPhone)>11))
+);
+
+
+CREATE TABLE citizenEducationDetails(
+    citizenId INT,
+    educationBoard VARCHAR(255) NOT NULL,
+    educationLevel VARCHAR(255) NOT NULL,
+    educationSpecialisation VARCHAR(255) NOT NULL,
+    yearOfPassing DATE NOT NULL,
+	collegeOfInstitute VARCHAR(255) NOT NULL,
+	FOREIGN KEY (citizenId) REFERENCES citizenPersonalDetails(citizenId),
+    
+    CONSTRAINT checkeducationboard CHECK (CHAR_LENGTH(educationBoard)<=255),
+    CONSTRAINT checkeducationlevel CHECK (CHAR_LENGTH(educationLevel)<=255),
+    CONSTRAINT checkeducationspecialisation CHECK (CHAR_LENGTH(educationSpecialisation)<=255),
+    CONSTRAINT checkyearofpassing CHECK (yearOfPassing <= sysdate()),
+    CONSTRAINT checkcollegeofinstitute CHECK (CHAR_LENGTH(collegeOfInstitute)<=255)
+);
+
+
+CREATE TABLE citizenMedicalHistory(
+    citizenId INT,
+    medicalCenterId VARCHAR(48) NOT NULL,
+    medDeptId BINARY(48) NOT NULL,
+    dateOfVisit DATE NOT NULL,
+    causeOfVisit CHAR(255) NOT NULL,
+	comments CHAR(255),
+	prescription CHAR(255),
+    FOREIGN KEY (citizenId) REFERENCES citizenPersonalDetails(citizenId)
+    #FOREIGN KEY (medDeptId)
+);
+INSERT INTO citizenMedicalHistory (medicalCenterId,medDeptId) VALUES(uuid_short(),uuid_short());
+SELECT medicalCenterId from citizenMedicalHistory;
+
+
+
+CREATE TABLE countryMedicalCenters(
+    id_countryMedicalCenters VARCHAR(48) NOT NULL,
+    stateId BINARY(48) NOT NULL,
+    name_countryMedicalCenters CHAR(255) NOT NULL,
+    location CHAR(255) NOT NULL
+);
+INSERT INTO countryMedicalCenters (id_countryMedicalCenters,stateId,name_countryMedicalCenters,location) VALUES(uuid(),uuid(),'JJFJ','HGDJ');
+
+
+CREATE TABLE countryMedicalDepartments(
+    medDeptId VARCHAR(48) NOT NULL,
+    departmentName CHAR(255) NOT NULL,
+    description CHAR(255) NOT NULL,
+    comments CHAR(255)
+);
+
+INSERT INTO countryMedicalCenters VALUES(uuid(),'HFGDGD','JJFJ','HGDJ');
+SELECT medDeptId FROM countryMedicalDepartments;
+	
