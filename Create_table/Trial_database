@@ -1,0 +1,77 @@
+USE Assignment1;
+
+################ creating MySQL tables# having constaints###############
+CREATE TABLE student (
+	student_id INT 	PRIMARY KEY,
+    name VARCHAR(20) NOT NULL,
+    major VARCHAR(20) DEFAULT 'undecided'
+);
+
+###### #########  Another way writing the above ##########################
+
+DESCRIBE student;
+DROP TABLE  student;
+
+ALTER TABLE student ADD gpa DECIMAL(3,2);
+ALTER TABLE student DROP COLUMN gpa;
+
+############## Inserting data into TABLE  ################################
+
+#SELECT * FROM student;
+
+INSERT INTO student (student_id,name) VALUES(1,'Jack');
+INSERT INTO student VALUES(2,'kate','Sociology');
+INSERT INTO student(student_id,name,major) VALUES(3,'Claire','History');
+INSERT INTO student VALUES(4,'katie','Mathematics');
+INSERT INTO student VALUES(5,'Robin','Chemistry');
+INSERT INTO student VALUES(6,'mike','Computer Science');
+INSERT INTO student VALUES(7,'Nicholas','Physics');
+
+############# updating data in a TABLE ###################################
+
+SELECT * FROM student;
+UPDATE student
+#SET major = 'Bio'
+#WHERE major = 'Biology';
+SET major = 'Comp Sci'
+WHERE student_id = 1 ;
+
+SELECT * FROM student;
+UPDATE sudent
+SET name ='Tom' ,major ='undecided'
+WHERE student_id = 1;
+
+##############       Delete from table ############################################
+
+SELECT * FROM student;
+
+DELETE FROM student
+WHERE name ='Jack';
+
+##############        Other queries   #########################################
+
+SELECT student.name,student.major
+FROM student
+ORDER BY name DESC;
+
+SELECT *
+FROM student
+ORDER BY student_id DESC;
+
+SELECT *
+FROM student
+ORDER BY student_id DESC
+LIMIT 2;
+
+SELECT name,major
+FROM student
+WHERE major = 'Chemistry';
+
+ -- <,>,<=,>=,=,<>(not equal to),AND,OR
+ 
+SELECT *
+FROM student
+WHERE major IN ('Chemistry') AND student_id > 2;
+ 
+
+
