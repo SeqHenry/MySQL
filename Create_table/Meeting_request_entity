@@ -1,0 +1,18 @@
+USE Assignment1
+
+DROP TABLE meeting
+
+CREATE TABLE meeting(
+  organisationName CHAR(64) NOT NULL,
+  meetingRoomName CHAR(64) NOT NULL,
+  meetingOwner CHAR(64) NOT NULL,
+  startTime DATETIME NOT NULL,
+  endTime DATETIME NOT NULL,
+  
+  CONSTRAINT ST CHECK (startTime<sysdate()),
+  CONSTRAINT ET CHECK (MINUTE.endTime >= MINUTE.startTime+15) 
+  );
+
+
+SELECT sysdate()from dual;
+INSERT INTO meeting (organisationName,meetingRoomName,meetingOwner,startTime,endTime) VALUES('Numino','Conference1','Louis','2020-02-02 12:35:01','2020-02-02 12:50:15');
